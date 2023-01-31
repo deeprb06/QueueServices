@@ -1,0 +1,48 @@
+{
+    "auth": {
+        "userNotAllowed": "You are unable to access this platform.",
+        "accountNotFoundEmail": "There’s no account found with this email address.",
+        "userNotAllowedSSO": "You are not authorize from sso-server.",
+        "unAuthenticated": "UNAUTHENTICATED.",
+        "register": "Registration successful.",
+        "emailExists":"Entered email already exists.",
+        "mobNoExists":"Entered mobile number already exists.",
+        "freeCourseNotAllow":"You are unable to access free OGM Course."
+    },
+    "module": {
+      "create": "{module} has been created successfully.",
+      "add": "{module} has been added successfully.",
+      "update": "{module} has been updated successfully.",
+      "delete": "{module} has been deleted successfully.",
+      "list": "All {module} have been obtained successfully.",
+      "get": "{module} has been obtained successfully.",
+      "createError":"Couldn't create the {module}.",
+      "updateError": "{module} not found or you can't update this {module}.",
+      "activate": "{module} activated.",
+      "deactivate": "{module} deactivated.",
+      "updateSequence": "Sequence has been updated.",
+      "alreadyExists": "{module} already exists.",
+      "publish":"You have published {module} course.",
+      "updateStatus": "{module} status updated successfully.",
+      "notFound": "{module} not found!",
+      "save": "Course added in your {module}.",
+      "remove": "Course removed from your {module}.",
+      "defaultStatusActivate": "{module} is selected as the default selection.",
+      "defaultStatusDeactivate" : "{module} is removed from default selection.",
+      "viewed": "You viewed this {module}.",
+      "sentData": "{module} sent successfully.",
+      "startTest": "{module} started successfully.",
+      "submitTest": "{module} submitted successfully.",
+      "alreadyCompleted": "You have already completed this {module}.",
+      "isApprove": "{module} request is send for approval.",
+      "verified" : "Course is verified.",
+      "reject" : "Course has been rejected.",
+      "reachedMax": "User have reached to max limit for create new {module}."
+    },
+    "validations": {
+      "deleteError": "You can't delete this {module} as {reason}.",
+      "cannotSent": "You can't sent this {module} as {reason}.",
+      "sentNotification": "{module} and {anotherEvent} successfully.",
+      "sentNotificationErr": "{module} successfully but could not sent as {reason}."
+    }
+  }

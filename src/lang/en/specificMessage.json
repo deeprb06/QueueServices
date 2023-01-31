@@ -1,0 +1,20 @@
+{
+    "specificMsg": {
+      "seoUpdate": "SEO has been updated successfully.",
+      "seoExists": "SEO already exists.",
+      "emptyData": "Data not available.",
+      "enable": "Download enabled.",
+      "disable": "Download disabled.",
+      "answered": "You answered the question.",
+      "publishErr": "You can't publish the course as your uploaded video is in process. Please try after a few seconds.",
+      "validPrice": "Selling price must be less than or equal to MRP.",
+      "notificationRead": "Notification read successfully.",
+      "couponApplied": "Coupon applied successfully.",
+      "couponExpire": "Coupon code expired.",
+      "couponInvalid": "Coupon code invalid.",
+      "couponInvalidForUser": "The coupon code entered is invalid for this user.",
+      "couponInvalidForCourse": "The coupon code entered is invalid for this course.",
+      "couponInvalidForCategory": "The coupon code entered is invalid for this category.",
+      "emptyCartCoupon": "Your cart is empty. Please add courses to the cart before applying coupon."
+    }
+}
