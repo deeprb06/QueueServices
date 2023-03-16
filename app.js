@@ -7,8 +7,11 @@ import config from './src/config';
 import i18next from 'i18next';
 import i18nextMiddleware from 'i18next-http-middleware';
 import FilesystemBackend from 'i18next-node-fs-backend';
+import logger from './src/helpers/utils/logger';
 
 const app = express();
+
+global.logger = logger;
 
 i18next
 .use(FilesystemBackend)
