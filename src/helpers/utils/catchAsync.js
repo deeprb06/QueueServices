@@ -1,6 +1,6 @@
 import httpStatus from 'http-status';
 import { RESPONSE_CODE } from '../../config/common';
-import responseCode from '../utils/responceCode';
+const responseCode = require('../utils/responceCode');
 
 export const catchAsync = (fn) => (req, res, next) => {
     Promise.resolve(fn(req, res, next)).catch(err => {
