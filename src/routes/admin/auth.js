@@ -2,10 +2,9 @@ import { Router } from 'express';
 import validate from '../../middleware/validate';
 import { authentication } from '../../middleware/auth';
 import validations from '../../helpers/utils/validations/commonValidation';
+import authController from '../../controller/authController';
 
 const router = Router();
-
-const authController = require('../../controllers/admin/authController');
 
 router.post('/login', validate(validations.login), authController.login);
 router.post('/logout', authentication, authController.logout);
