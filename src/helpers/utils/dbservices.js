@@ -402,3 +402,13 @@ export const deleteDocument = (model, filter) => {
         });
     });
 }
+
+export const dbHooks = async (modelSchema) => {
+    modelSchema.pre(
+        ['findOne', 'find', 'updateOne', 'updateMany'],
+        function (next) {
+            this.getQuery().isDeleted = { $exists: false };
+            next();
+        },
+    );
+};
