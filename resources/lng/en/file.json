@@ -1,0 +1,10 @@
+{
+    "file": {
+        "upload": "Your file is uploaded.",
+        "upload_multiple": "Your files are uploaded.",
+        "folder_required": "Folder field is required.",
+        "file_not_uploaded": "No file uploaded.",
+        "remove": "File removed successfully.",
+        "file_type": "Only image files are allowed."
+    }
+}
