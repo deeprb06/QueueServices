@@ -1,6 +1,6 @@
-import Role from '../models/role';
+import Role from '../../models/role';
 import { ObjectId } from 'mongoose';
-import roleAndPermissionService from '../services/rolePermission';
+import roleAndPermissionService from '../../services/rolePermission';
 
 const getPermission = catchAsync(async (req, res) => {
     let id = req.userId;

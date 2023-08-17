@@ -2,7 +2,7 @@ import { Router } from 'express';
 import validate from "../../middleware/validate";
 import validations from "../../helpers/utils/validations/commonValidation";
 import { authentication, checkPermission } from "../../middleware/auth";
-import roleController from '../../controller/roleController';
+import roleController from '../../controller/admin/roleController';
 
 const router = Router()
 

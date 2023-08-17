@@ -1,6 +1,6 @@
 import authService from '../services/auth';
-import { JWT_STRING } from '../config/constants/authConstant';
-import MSGCONSTANT from '../config/messages';
+import { JWT_STRING } from '../../config/constants/authConstant';
+import MSGCONSTANT from '../../config/messages';
 
 const login = catchAsync(async (req, res) => {
     let { email, password } = req.body;
