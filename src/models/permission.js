@@ -1,10 +1,10 @@
-import { Schema, model } from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate-v2';
-import idValidator from 'mongoose-id-validator';
-import { myCustomLabels } from '../config/common';
+const mongoose = require('../../config/db');
+const mongoosePaginate = require('mongoose-paginate-v2');
+const idValidator = require('mongoose-id-validator');
+const { myCustomLabels } = require('../config/constants/common');
 
 mongoosePaginate.paginate.options = { customLabels: myCustomLabels };
-
+const Schema = mongoose.Schema;
 const schema = new Schema(
     {
         route_name: {
@@ -42,6 +42,6 @@ schema.pre('save', async function (next) {
 schema.plugin(mongoosePaginate);
 schema.plugin(idValidator);
 
-const permission = model('permission', schema, 'permission');
+const permission = mongoose.model('permission', schema, 'permission');
 
-export default permission;
+module.exports = permission;

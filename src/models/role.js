@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import idValidator from 'mongoose-id-validator';
 import uniqueValidator from 'mongoose-unique-validator';
-import { myCustomLabels } from '../config/common';
+import { myCustomLabels } from '../config/constants/common';
 import { dbHooks } from '../helpers/utils/dbservices';
 
 

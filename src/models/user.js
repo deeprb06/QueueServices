@@ -3,9 +3,9 @@ import mongoosePaginate from 'mongoose-paginate-v2';
 import idValidator from 'mongoose-id-validator';
 import bcrypt from 'bcrypt';
 import uniqueValidator from 'mongoose-unique-validator';
-import { myCustomLabels } from '../config/common';
+import { myCustomLabels } from '../config/constants/common';
 import commonSchema from '../helpers/utils/commonSchema';
-const { COUNTRY_CODE } = require('../config/common');
+const { COUNTRY_CODE } = require('../config/constants/common');
 
 mongoosePaginate.paginate.options = { customLabels: myCustomLabels };
 

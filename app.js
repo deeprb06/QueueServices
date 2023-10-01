@@ -1,21 +1,22 @@
-import express from 'express';
-import cors from 'cors';
-import path from 'path';
-import jobQueue from './src/services/bull-jobs/eachProcess';
-import routes from './src/routes'
-import config from './src/config';
-import i18next from 'i18next';
-import i18nextMiddleware from 'i18next-http-middleware';
-import FilesystemBackend from 'i18next-node-fs-backend';
-import logger from './src/helpers/utils/logger';
-import { catchAsync } from './src/helpers/utils/catchAsync';
-import { localize, toTitleCase, randomString } from './src/helpers/utils/localize';
-import util from './src/helpers/utils/messages';
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+const routes = require('./src/routes');
+const config = require('./src/config');
+const i18next = require('i18next');
+const i18nextMiddleware = require('i18next-http-middleware');
+const FilesystemBackend = require('i18next-node-fs-backend');
+const logger = require('./src/utils/logger');
+const catchAsync = require('./src/utils/catchAsync');
+const { localize, toTitleCase, randomString } = require('./src/utils/helper');
+const util = require('./src/utils/messages');
+const queuesRouter = require('./src/services/jobs');
 const app = express();
+require('./src/services/jobs/process');
 
 global.logger = logger;
 global.catchAsync = catchAsync;
-global._localize = localize,
+global._localize = localize;
 global._toTitleCase = toTitleCase;
 global._randomString = randomString;
 global.util = util;
@@ -28,7 +29,10 @@ i18next
         ns: ['file', 'specificMessage', 'common'],
         defaultNS: ['file', 'specificMessage', 'common'],
         backend: {
-            loadPath: path.join(__dirname, `/src/lang/{{lng}}/{{ns}}.json`),
+            loadPath: path.join(
+                __dirname,
+                `/resources/lang/{{lng}}/{{ns}}.json`,
+            ),
             addPath: path.join(__dirname, `/src/lang/{{lng}}/{{ns}}.json`),
         },
         detection: {
@@ -39,11 +43,13 @@ i18next
         fallbackLng: 'en',
         preload: ['en'],
     });
+
 app.use(i18nextMiddleware.handle(i18next));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/queues', queuesRouter);
 
 app.use(config.api.prefix, routes);
 
-export default app;
+module.exports = app;

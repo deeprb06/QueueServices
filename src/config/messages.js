@@ -1,7 +1,7 @@
 /**
  * Configuration file where you can store error codes for responses
  */
-export default {
+module.exports = {
     MESSAGE: {
         ENTER_UNIQUE_CODE: {
             message: 'Please enter unique code.',

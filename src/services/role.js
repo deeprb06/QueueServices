@@ -1,6 +1,5 @@
-
-import Role from '../models/role';
-import service from '../helpers/utils/dbservices';
+const Role = require('../models/role');
+const service = require('../helpers/utils/dbservices');
 
 const createService = async (data) => {
     try {

@@ -1,18 +1,13 @@
-import AWS from ('aws-sdk');
-import fs from ('fs');
-import path from ('path');
-import https from ('https');
-import { REPORTS_IMAGES_NAME } from ('../../config/constants/common');
+const AWS = require('aws-sdk');
 const awsConfig = {
     apiVersion: process.env.AWS_S3_API_VERSION,
     accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
     region: process.env.AWS_S3_REGION,
 };
-import FormData from ('form-data');
 AWS.config.update(awsConfig);
 const s3 = new AWS.S3();
-import pdf from ('html-pdf');
+const pdf = require('html-pdf');
 
 const uploadFileToS3 = async (file, fileName) => {
     const fileContent = Buffer.from(file.data, 'binary');
@@ -51,35 +46,33 @@ const createPdf = async (html, pdfName, id, isOrder = false) =>
                     },
                 },
             };
-            pdf
-                .create(html, options)
-                .toStream(async function (err, response) {
-                    if (err) {
-                        logger.error(err);
-                        console.error(err);
-                        reject(err);
-                    }
-                    if (response) {
-                        const params = {
-                            Bucket: process.env.AWS_S3_BUCKET_NAME,
-                            Key: storeName,
-                            Body: response,
-                            ACL: 'public-read',
-                            ContentType: 'application/pdf',
-                        };
-                        s3.upload(params, (err, data) => {
-                            if (err) {
-                                reject(err);
-                            }
-                            return resolve({
-                                filename: `${process.env.AWS_S3_URL}/${storeName}`,
-                                storeName,
-                            });
+            pdf.create(html, options).toStream(async function (err, response) {
+                if (err) {
+                    logger.error(err);
+                    console.error(err);
+                    reject(err);
+                }
+                if (response) {
+                    const params = {
+                        Bucket: process.env.AWS_S3_BUCKET_NAME,
+                        Key: storeName,
+                        Body: response,
+                        ACL: 'public-read',
+                        ContentType: 'application/pdf',
+                    };
+                    s3.upload(params, (err, data) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        return resolve({
+                            filename: `${process.env.AWS_S3_URL}/${storeName}`,
+                            storeName,
                         });
-                    } else {
-                        return await createPdf(html, pdfName, id);
-                    }
-                });
+                    });
+                } else {
+                    return await createPdf(html, pdfName, id);
+                }
+            });
         } catch (error) {
             console.error(error);
             logger.error(error);
@@ -109,7 +102,7 @@ const s3ImageBuffer = async (name) => {
     }
 };
 
-export default {
+module.exports = {
     uploadFileToS3,
     deleteFileFromS3,
     createPdf,

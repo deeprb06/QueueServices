@@ -1,10 +1,10 @@
-import { Schema, model } from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate-v2';
-import idValidator from 'mongoose-id-validator';
-import { myCustomLabels } from '../config/common';
+const mongoose = require('../../config/db');
+const mongoosePaginate = require('mongoose-paginate-v2');
+const idValidator = require('mongoose-id-validator');
+const { myCustomLabels } = require('../config/constants/common');
 
 mongoosePaginate.paginate.options = { customLabels: myCustomLabels };
-
+const Schema = mongoose.Schema;
 const schema = new Schema(
     {
         permission_id: {
@@ -28,7 +28,6 @@ const schema = new Schema(
         toJSON: { virtuals: true },
     },
 );
-
 schema.pre('save', async function (next) {
     this.isDeleted = false;
     this.isActive = true;
@@ -38,6 +37,10 @@ schema.pre('save', async function (next) {
 schema.plugin(mongoosePaginate);
 schema.plugin(idValidator);
 
-const permissionRole = model('permissionRole', schema);
+const permissionRole = mongoose.model(
+    'permissionRole',
+    schema,
+    'permissionRole',
+);
 
-export default permissionRole;
+module.exports = permissionRole;

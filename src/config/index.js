@@ -1,19 +1,15 @@
-import dotenv from 'dotenv';
-import path from 'path';
+const dotenv = require('dotenv');
+
 dotenv.config();
 
-export default {
-
-
+module.exports = {
     /**
      * Your favorite port
      */
     port: process.env.API_PORT || 8000,
 
-
-
     /* MongoDB Credentials */
-    MONGO_HOST: process.env.MONGO_HOST || "mongodb://localhost:27017/TodoTest",
+    MONGO_HOST: process.env.MONGO_HOST || 'mongodb://localhost:27017/TodoTest',
 
     JWT_SECRET: process.env.JWT_SECRET || 'cdcdcd',
 
@@ -21,7 +17,7 @@ export default {
      * API configs
      */
     api: {
-        prefix: '/api'
+        prefix: '/api',
     },
 
     /**
@@ -41,16 +37,7 @@ export default {
     NOVU_BACKEND_URL: process.env.NOVU_BACKEND_URL,
 
     /**
-     *  JOB Name
-     */
-    JOB_NAME: {
-        SENDMAIL : "sendMail",
-        SEND_NOTIFICATIONS: "sendNotifications"
-    },
-
-    /**
      * FIREBASE PRIVATE KEY
      */
-    FIREBASE_PRIVATE_KEY: "FIREBASE_PRIVATE_KEY"
-
+    FIREBASE_PRIVATE_KEY: 'FIREBASE_PRIVATE_KEY',
 };

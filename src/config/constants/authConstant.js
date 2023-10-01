@@ -1,10 +1,10 @@
-export const MASTER = {
+const MASTER = {
     WORK: true,
     MASTER_OTP: 123456,
     MASTER_PASSWORD: 'Test@12345',
 };
 
-export const JWT = {
+const JWT = {
     SECRET: 'myjwtsecret',
     ADMIN_SECRET: 'myjwtadminsecret',
     CLIENT_SECRET: 'myjwtclientsecret',
@@ -15,20 +15,17 @@ export const JWT = {
     PASSWORD_NOT_MATCH: 0,
 };
 
-export const USER_TYPES = {
-    USER: 1,
-    CLIENT: 2,
-};
-
-export const USER_ROLES = {
-    CANDIDATE: 'CANDIDATE',
-    CLIENT: 'CLIENT',
+const USER_ROLES = {
     ADMIN: 'ADMIN',
-    STAFF: 'STAFF',
     USER: 'USER',
-    ASSESSOR: 'ASSESSOR',
-    REVIEWER: 'REVIEWER',
 };
 
-export const JWT_STRING = 'jwt ';
+const JWT_STRING = 'jwt ';
+
+module.exports = {
+    MASTER,
+    JWT,
+    JWT_STRING,
+    USER_ROLES
+}
 

@@ -1,7 +1,7 @@
 import Role from '../models/role';
 import User from '../models/user';
 import { ObjectId } from 'mongoose';
-import { RESPONSE_CODE } from '../config/common';
+import { RESPONSE_CODE } from '../config/constants/common';
 import responseCode from '../helpers/utils/responceCode'
 import jwt from 'jsonwebtoken';
 import config from '../config';

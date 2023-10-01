@@ -6,7 +6,9 @@ import Role from '../models/role';
 
 const permit = async (req) => {
     if (req.route.hasOwnProperty('o')) {
-        const permission = await Permission.findOne({ route_name: req.route['o'] });
+        const permission = await Permission.findOne({
+            route_name: req.route['o'],
+        });
         if (!permission) {
             return true;
         }
@@ -17,7 +19,7 @@ const permit = async (req) => {
         }
         permissionExist = await PermissionRole.countDocuments({
             permission_id: permission.id,
-            role_id: req.roleIds
+            role_id: req.roleIds,
         });
 
         return permissionExist;
@@ -61,35 +63,40 @@ const getPermissionService = async (id) => {
 
 const updatePermissionService = async (roleId, permissionIds) => {
     try {
-        let role = await Role.findOne({_id: roleId});
+        let role = await Role.findOne({ _id: roleId });
         if (role) {
-                await PermissionRole.deleteMany({
+            await PermissionRole.deleteMany({
                 role_id: roleId,
-                canDel: true
+                canDel: true,
             });
             if (permissionIds.length) {
-                await Promise.all(_.map(permissionIds, async (permissionId) => {
-                    let permission = await Permission.findOne({_id: permissionId});
-                    console.info(permission);
-                    if (permission) {
-                        let data = {
-                            permission_id: permissionId,
-                            role_id: roleId,
-                        };
-                        const permissionRole = await PermissionRole.findOne(data);
-                        if (!permissionRole) {
-                            await PermissionRole.create(data);
+                await Promise.all(
+                    _.map(permissionIds, async (permissionId) => {
+                        let permission = await Permission.findOne({
+                            _id: permissionId,
+                        });
+                        console.info(permission);
+                        if (permission) {
+                            let data = {
+                                permission_id: permissionId,
+                                role_id: roleId,
+                            };
+                            const permissionRole = await PermissionRole.findOne(
+                                data,
+                            );
+                            if (!permissionRole) {
+                                await PermissionRole.create(data);
+                            }
                         }
-                    }
-
-                }))
+                    }),
+                );
             }
             return true;
         } else {
             return false;
         }
     } catch (error) {
-        console.error("Error - updatingrolepermission", error);
+        console.error('Error - updatingrolepermission', error);
         throw new Error(error.message);
     }
 };
@@ -103,22 +110,30 @@ const getAllPermissionService = async () => {
             return false;
         }
     } catch (error) {
-        console.error("Error - gettingrolepermission", error);
+        console.error('Error - gettingrolepermission', error);
         throw new Error(error.message);
     }
 };
 const getPermissionByIdService = async (id) => {
     try {
         let permissions = await Permission.find().lean();
-        const allPermissions = await Promise.all(_.map(permissions, async (permission) => {
-            const permissionRole = await PermissionRole.findOne({role_id: id, permission_id: permission._id});
-            let obj = {..._.pick(permission, ['_id', 'route_name', 'module']), selected: !!permissionRole}
-            obj.route_name = permission.route_name.split('.')[1]
-            return obj
-        }))
+        const allPermissions = await Promise.all(
+            _.map(permissions, async (permission) => {
+                const permissionRole = await PermissionRole.findOne({
+                    role_id: id,
+                    permission_id: permission._id,
+                });
+                let obj = {
+                    ..._.pick(permission, ['_id', 'route_name', 'module']),
+                    selected: !!permissionRole,
+                };
+                obj.route_name = permission.route_name.split('.')[1];
+                return obj;
+            }),
+        );
         return _.groupBy(allPermissions, 'module');
     } catch (error) {
-        console.error("Error - gettingrolepermission", error);
+        console.error('Error - gettingrolepermission', error);
         throw new Error(error.message);
     }
 };
@@ -128,5 +143,5 @@ export default {
     updatePermissionService,
     getAllPermissionService,
     getPermissionByIdService,
-    permit
+    permit,
 };
