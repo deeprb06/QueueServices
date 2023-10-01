@@ -13,6 +13,8 @@ const util = require('./src/utils/messages');
 const queuesRouter = require('./src/services/jobs');
 const app = express();
 require('./src/services/jobs/process');
+const { store } = require('./src/seeder/store-routes');
+const descriptor = require('express-list-endpoints-descriptor')(express);
 
 global.logger = logger;
 global.catchAsync = catchAsync;
@@ -52,4 +54,8 @@ app.use('/queues', queuesRouter);
 
 app.use(config.api.prefix, routes);
 
+store(descriptor.listEndpoints(app));
+if (parseInt(config.SEED)) {
+    initSeed().then(() => logger.info('seeded successfully'));
+}
 module.exports = app;
