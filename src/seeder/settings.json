@@ -1,0 +1,41 @@
+[
+    {
+        "name": "Firebase Private Key",
+        "code": "FIREBASE_PRIVATE_KEY",
+        "isActive": true,
+        "details": {
+            "type": "service_account",
+            "project_id": "here-is-your-projectname",
+            "private_key_id": "private_key",
+            "private_key": "-----BEGIN PRIVATE KEY-----",
+            "client_email": "client_email",
+            "client_id": "client_id",
+            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+            "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/"
+        }
+    },
+    {
+        "name": "about_us",
+        "code": "ABOUT_US",
+        "url": "https://www.url.com/about-us",
+        "details": "html static details",
+        "isActive": true
+    },
+    {
+        "name": "privacy_policy",
+        "code": "PRIVACY_POLICY",
+        "url": "https://www.url.com/terms-condition",
+        "details": "html static details",
+        "isActive": true
+    },
+  
+    {
+        "name": "terms_and_conditions",
+        "code": "TERMS_AND_CONDITIONS",
+        "url": "https://www.url.com/privacy-policy",
+        "details": "html static details",
+        "isActive": true
+    },
+]

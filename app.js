@@ -15,6 +15,7 @@ const app = express();
 require('./src/services/jobs/process');
 const { store } = require('./src/seeder/store-routes');
 const descriptor = require('express-list-endpoints-descriptor')(express);
+require('./src/utils/firebaseConfig');
 
 global.logger = logger;
 global.catchAsync = catchAsync;

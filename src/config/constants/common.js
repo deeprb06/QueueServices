@@ -51,6 +51,8 @@ const EMAIL_TEMPLATE = {
     PASSWORD_RESET_OTP: 'PASSWORD_RESET_OTP',
 };
 
+const FIREBASE_PRIVATE_KEY = 'FIREBASE_PRIVATE_KEY'
+
 module.exports = {
     myCustomLabels,
     LOG_STATUS,
@@ -59,4 +61,5 @@ module.exports = {
     COUNTRY_CODE,
     JOB_NAME,
     EMAIL_TEMPLATE,
+    FIREBASE_PRIVATE_KEY
 };
