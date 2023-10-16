@@ -1,11 +1,24 @@
-import { Router } from 'express';
-import validate from '../../middleware/validate';
-import validations from '../../helpers/utils/validations/commonValidation';
-import { authentication, checkPermission } from '../../middleware/auth';
-import notificationController from '../../controller/client/notification';
-const router = Router();
+const router = require('express').Router();
+const notificationController = require('../../controller/client/notification');
 
-router.post('/save-device-token', authentication, checkPermission, validate(validations.deviceToken), notificationController.saveToken);
-router.post('/send-notification', authentication, notificationController.sendManualPushNotification);
+router.post(
+    '/general/list',
+    authentication,
+    checkPermission,
+    notificationController.list,
+);
+router.patch(
+    '/read-notification/:id',
+    authentication,
+    checkPermission,
+    notificationController.updateReadStatus,
+);
+router.put(
+    '/general/count',
+    authentication,
+    checkPermission,
+    notificationController.notificationCount,
+);
 
-export default router;
+
+module.exports = router;
