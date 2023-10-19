@@ -53,6 +53,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/queues', queuesRouter);
 
+// agenda js configuration
+require('./src/services/agenda/agendaSchedular');
+
 app.use(config.api.prefix, routes);
 
 store(descriptor.listEndpoints(app));

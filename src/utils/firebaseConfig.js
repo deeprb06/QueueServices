@@ -13,7 +13,6 @@ new Promise((resolve, reject) => {
 }).then((firebaseData) => {
     if (!firebaseData?.details || !Object.keys(firebaseData?.details).length) {
         logger.error('Firebase private key not found in DB.');
-        process.exit(0);
     }
     admin.initializeApp({
         credential: admin.credential.cert(firebaseData?.details),
