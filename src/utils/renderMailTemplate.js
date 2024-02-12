@@ -91,6 +91,57 @@ const setHeaderAndFooter = async (body, obj) => {
         .replace('{{footer}}', obj.footer);
 };
 
+const getLngStr = async (emailCode, lng) => {
+    try {
+        const emailContent = await EmailTemplate.findOne({ code: emailCode });
+        if (lng.toLowerCase() == LNG.ID)
+            return {
+                body: emailContent.body.id,
+                subject: emailContent.subject.id,
+            };
+        else if (lng.toLowerCase() == LNG.EN)
+            return {
+                body: emailContent.body.en,
+                subject: emailContent.subject.en,
+            };
+    } catch (error) {
+        logger.error('Error - getLngStr ', error);
+        throw new Error(error);
+    }
+};
+
+const generateHTMLStr = (html, renderedContent) => {
+    try {
+        let htmlStr = html;
+        for (let key in renderedContent) {
+            if (!renderedContent.hasOwnProperty(key)) {
+                continue;
+            }
+            let matchedKey = `{{${key}}}`;
+            htmlStr = htmlStr.replaceAll(matchedKey, renderedContent[key]);
+        }
+        if (Object.keys(renderedContent).length) return htmlStr;
+        else return '';
+    } catch (error) {
+        logger.error('Error - generateHTMLStr ', error);
+        throw new Error(error);
+    }
+};
+
+const getMailData = async (emailCode, renderedObj, lng) => {
+    try {
+        const emailData = {};
+
+        const MailContent = await getLngStr(emailCode, lng);
+        emailData.htmlStr = generateHTMLStr(MailContent?.body, renderedObj);
+        emailData.subject = MailContent.subject;
+        return emailData;
+    } catch (error) {
+        logger.error('Error - getMailData ', error);
+        throw new Error(error);
+    }
+};
+
 /**
  * 
  * 

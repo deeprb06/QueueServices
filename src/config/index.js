@@ -46,6 +46,17 @@ module.exports = {
         // PASSWORD: process.env.REDIS_PASSWORD == "" ? process.env.REDIS_PASSWORD : process.env.REDIS_PASSWORD ? `:${process.env.REDIS_PASSWORD}@` : "",
         // USER : process.env.REDIS_USER ?? ""
     },
+    AWS_CONFIG: {
+        AWS_S3_ACCESS_KEY: process.env.AWS_S3_ACCESS_KEY,
+        AWS_S3_BUCKET_NAME: process.env.AWS_S3_BUCKET_NAME,
+        AWS_SESSION_TOKEN: process.env.AWS_SESSION_TOKEN,
+        AWS_S3_SECRET_KEY: process.env.AWS_S3_SECRET_KEY,
+        AWS_S3_URL: process.env.AWS_S3_URL,
+        AWS_S3_API_VERSION: process.env.AWS_S3_API_VERSION,
+        AWS_ACCESS_ID: process.env.AWS_ACCESS_ID,
+        AWS_SECRET_KEY: process.env.AWS_SECRET_KEY,
+        REGION: process.env.REGION
+    },
     /**
      * Novu Access
      */
@@ -55,5 +66,8 @@ module.exports = {
     /**
      * FIREBASE PRIVATE KEY
      */
-    FIREBASE_PRIVATE_KEY: 'FIREBASE_PRIVATE_KEY',
+    FIREBASE: {
+        NOTIFICATION_LINK: process.env.FIREBASE_NOTIFICATION_LINK,
+        SERVERKEY: process.env.FIREBASE_SERVERKEY
+    },
 };
