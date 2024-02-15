@@ -1,22 +1,23 @@
 const mongoose = require('mongoose');
-const config = require('./');
+const { MONGODB } = require('./config');
+const dbConfigure = `${MONGODB.DB_USERNAME}${MONGODB.DB_PASSWORD}`;
+const dConnection = `${MONGODB.DB_CONNECTION}://${dbConfigure}${MONGODB.DB_HOST}${MONGODB.DB_PORT}/${MONGODB.DB_DATABASE}`;
 
-const connectDB = async () => {
-    try {
-        const mongo_host = config.MONGO_HOST;
-        console.log(mongo_host, '-mongo_host`');
-        const options = {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        };
-        await mongoose.connect(mongo_host, options);
-        console.info('MongoDB Connected...');
-        return mongoose.connection;
-    } catch (error) {
-        console.log('error: ', error);
-        // Exit process with failure
-        process.exit(1);
-    }
-};
+mongoose.connect(dConnection, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+// TODO: Remove debug in production
 
-export default connectDB;
+mongoose.set('debug', false);
+let db = mongoose.connection;
+
+db.once('open', () => {
+    logger.info('Connection Succeed');
+});
+
+db.on('error', () => {
+    logger.info('Error in Connect Mongo');
+});
+
+module.exports = mongoose;
