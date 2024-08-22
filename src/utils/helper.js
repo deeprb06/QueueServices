@@ -154,101 +154,55 @@ const convertPaginationResult = (data, pagination, filterCount) => {
     }
 };
 
-/**
- *
- * @param {*} details collection update details
- * @param {*} itemType arrayType or objectType
- * @param {*} data params data
- * @param {*} model name of collection
- * @param {*} promises array to push all ref query
- */
-
-const updateArrayOrObjectItems = (details, itemType, data, model, promises) => {
-    details?.[itemType]?.forEach(async (item) => {
-        const updateObj = {};
-        Object.entries(data.updateData).forEach(([key, value]) => {
-            if (!IGNORE_SELECTED_KEYS.includes(key)) {
-                const updateKey =
-                    itemType === 'arrayType'
-                        ? `${item}.$.${key}`
-                        : `${item}.${key}`;
-                Object.assign(updateObj, { [updateKey]: value });
-            }
-        });
-        promises.push(
-            model.updateMany(
-                {
-                    [`${item}.id`]: data.updateData._id,
-                    deletedAt: { $exists: false },
-                },
-                { $set: updateObj },
-            ),
-        );
-    });
-};
-
 const refDataUpdate = async (data) => {
     try {
         const promises = [];
-        for (const [collection, details] of Object.entries(
-            data.collectionDetails,
-        )) {
-            const model = require(`../models/${collection}`);
-            updateArrayOrObjectItems(
-                details,
-                'arrayType',
-                data,
-                model,
-                promises,
-            );
-            // updateArrayOrObjectItems(details, 'objectType', data, model, promises);
+        for (const [collection, details] of Object.entries(data.collectionDetails)) {
+            const model = require(`../models/${collection}`)
+            details?.arrayType?.forEach(async (item) => {
+                const updateObj = {}
+                Object.entries(data.updateData).forEach(([key, value]) => {
+                    if (!IGNORE_SELECTED_KEYS.includes(key)) {
+                        Object.assign(updateObj, { [`${item}.$.${key}`]: value });
+                    }
+                });
+                promises.push(model.updateMany({ [`${item}.id`]: data.updateData._id, deletedAt: { $exists: false} }, { $set: updateObj }));
+            });
+            details?.objectType?.forEach(async (item) => {
+                const updateObj = {}
+                Object.entries(data.updateData).forEach(([key, value]) => {
+                    if (!IGNORE_SELECTED_KEYS.includes(key)) {
+                        Object.assign(updateObj, { [`${item}.${key}`]: value });
+                    }
+                });
+                promises.push(model.updateMany({ [`${item}.id`]: data.updateData._id, deletedAt: { $exists: false } }, { $set: updateObj }));
+            });
         }
         await Promise.all(promises);
-    } catch (error) {
-        logger.error('Error - refDataUpdate', error);
+    }catch(error){
+        logger.error("Error - refDataUpdate", error)
     }
-};
-
-const deleteArrayorObjectItem = (details, itemType, data, model, promises) => {
-    details?.[itemType]?.forEach(async (item) => {
-        const updateObj =
-            itemType === 'arrayType'
-                ? { $pull: { [item]: { id: data.updateData._id } } }
-                : { $unset: { [item]: { id: data.updateData._id } } };
-
-        promises.push(
-            model.updateMany(
-                {
-                    [`${item}.id`]: data.updateData._id,
-                    deletedAt: { $exists: false },
-                },
-                updateObj,
-            ),
-        );
-    });
-};
+}
 
 const refDataDelete = async (data) => {
     try {
         const promises = [];
-        for (const [collection, details] of Object.entries(
-            data.collectionDetails,
-        )) {
-            const model = require(`../models/${collection}`);
-            deleteArrayorObjectItem(
-                details,
-                'arrayType',
-                data,
-                model,
-                promises,
-            );
-            // deleteArrayorObjectItem(details, 'objectType', data, model, promises);
+        for (const [collection, details] of Object.entries(data.collectionDetails)) {
+            const model = require(`../models/${collection}`)
+            details?.arrayType?.forEach(async (item) => {
+                const updateObj = { $pull: { [item]: { id: data.updateData._id }}}
+                promises.push(model.updateMany({ [`${item}.id`]: data.updateData._id, deletedAt: { $exists: false } }, updateObj ));
+            });
+            details?.objectType?.forEach(async (item) => {
+                const updateObj = { $unset: { [item]: { id: data.updateData._id } } }
+                promises.push(model.updateMany({ [`${item}.id`]: data.updateData._id, deletedAt: { $exists: false } }, updateObj ));
+            });
         }
         await Promise.all(promises);
     } catch (error) {
-        logger.error('Error - refDataUpdate', error);
+        logger.error("Error - refDataUpdate", error)
     }
-};
+}
 
 /**
  *
@@ -330,8 +284,5 @@ module.exports = {
     convertPaginationResult,
     refDataDelete,
     refDataUpdate,
-    createPdf,
-    migrateProfilePercentage,
-    updateProfilePercentage,
-    migrateProfilePercentQueueFunc,
+    createPdf
 };
